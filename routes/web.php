@@ -7,11 +7,14 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/posts', [PostController::class, 'index'])
-    ->name('posts');
+// Blog Posts (Main Index Page)
+Route::get('/posts', [PostController::class, 'index'])->name('posts');
 
-Route::get('/posts/{post:slug}', [PostController::class, 'show'])
-    ->name('post');
+// Individual Post Page (By Slug)
+Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('post');
 
-Route::get('/authors/{user}', [PostController::class, 'index'])
-    ->name('author');
+// Author-Specific Posts
+Route::get('/author/{user}', [PostController::class, 'author'])->name('author');
+
+// Promoted Posts Page
+Route::get('/promoted', [PostController::class, 'promoted'])->name('promoted');
