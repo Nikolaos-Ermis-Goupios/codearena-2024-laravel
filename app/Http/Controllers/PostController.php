@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\Request;
+
 
 class PostController extends Controller
 {
@@ -23,6 +25,7 @@ class PostController extends Controller
     
         return view('posts.index', compact('posts', 'authors'));
     }
+    
     public function author(User $user)
     { 
         $posts = Post::where('user_id', $user->id) // Filter by author
@@ -32,6 +35,7 @@ class PostController extends Controller
 
         return view('posts.author', compact('posts', 'user'));
     }
+
     public function promoted()
     {
         $posts = Post::where('promoted', true)
@@ -41,6 +45,7 @@ class PostController extends Controller
 
         return view('posts.promoted', compact('posts'));
     } 
+
     public function show(Post $post)
     {
          // Check if the post is unpublished
@@ -48,6 +53,23 @@ class PostController extends Controller
             abort(404); // Return a 404 response if unpublished
         }
         return view('posts.show', compact('post'));
+    }
+
+    public function storeComment(Request $request, Post $post)
+    {
+        // Validate the comment
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'body' => 'required|string',
+        ]);
+
+        // Save the comment
+        $post->comments()->create([
+            'name' => $validated['name'],
+            'body' => $validated['body'],
+        ]);
+
+        return redirect()->route('post', $post);
     }
     
 }

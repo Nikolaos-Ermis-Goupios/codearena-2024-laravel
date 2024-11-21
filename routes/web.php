@@ -18,3 +18,6 @@ Route::get('/author/{user}', [PostController::class, 'author'])->name('author');
 
 // Promoted Posts Page
 Route::get('/promoted', [PostController::class, 'promoted'])->name('promoted');
+
+// Comment submissions
+Route::post('/posts/{post}/comment', [PostController::class, 'storeComment'])->name('comment');

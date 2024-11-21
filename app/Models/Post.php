@@ -40,4 +40,9 @@ class Post extends Model
     {
         return $query->orderBy('promoted', 'desc')->orderBy('published_at', 'desc');
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 }
