@@ -391,6 +391,29 @@ class BlogTest extends TestCase
      */
     public function testBlogPostsPageHasPagination()
     {
-        $this->markTestIncomplete();
-    }
+       // Create 15 blog posts to exceed the pagination limit of 12
+        $posts = Post::factory()->count(15)->create([
+            'user_id' => User::factory(), // Assign a user for each post
+            'published_at' => now(),
+        ]);
+        // Visit the blog posts page
+        $response = $this->get(route('posts.index'));
+
+        // Ensure the response is successful
+        $response->assertStatus(200);
+
+        // Check that only 12 posts are displayed on the first page
+        foreach ($posts->take(12) as $post) {
+            $response->assertSee($post->title);
+        }
+
+        // Ensure that the remaining posts are not on the first page
+        foreach ($posts->slice(12) as $post) {
+            $response->assertDontSee($post->title);
+        }
+
+        // Check that pagination links are visible
+        $response->assertSee('Next')
+                ->assertSee('Previous');
+        }
 }

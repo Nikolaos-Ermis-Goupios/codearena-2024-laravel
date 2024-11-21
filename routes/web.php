@@ -21,3 +21,13 @@ Route::get('/promoted', [PostController::class, 'promoted'])->name('promoted');
 
 // Comment submissions
 Route::post('/posts/{post}/comment', [PostController::class, 'storeComment'])->name('comment');
+
+// Comment sorted by created at
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('post');
+
+// Route for deleting a comment
+Route::delete('/comments/{comment}', [PostController::class, 'destroyComment'])->name('comment.delete');
+
+// Seperate rout for the pagination,user id
+Route::get('/all-posts', [PostController::class, 'index'])->name('posts.index');
+

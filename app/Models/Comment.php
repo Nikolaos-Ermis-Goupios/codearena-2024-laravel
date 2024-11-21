@@ -12,4 +12,10 @@ class Comment extends Model
     {
         return $this->belongsTo(Post::class);
     }
+    
+    public function scopeLatestFirst($query)
+    {
+        return $query->orderBy('created_at', 'desc');
+    }   
+
 }

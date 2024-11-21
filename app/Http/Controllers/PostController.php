@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Comment;
 
 
 class PostController extends Controller
@@ -48,10 +49,15 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-         // Check if the post is unpublished
-         if (!$post->published_at) {
-            abort(404); // Return a 404 response if unpublished
+        if (!$post->published_at) {
+            abort(404); // If unpublished, return 404
         }
+    
+         // Load comments in descending order of created_at
+        $post->load(['comments' => function ($query) {
+            $query->latestFirst();
+        }]);
+
         return view('posts.show', compact('post'));
     }
 
@@ -70,6 +76,15 @@ class PostController extends Controller
         ]);
 
         return redirect()->route('post', $post);
+    }
+    // Logic to delete the comment 
+    public function destroyComment(Comment $comment)
+    {
+        // Ensure the comment is deleted
+        $post = $comment->post; // Get the associated post
+        $comment->delete(); // Delete the comment
+
+        return redirect()->route('post', $post)->with('success', 'Comment deleted successfully.');
     }
     
 }
