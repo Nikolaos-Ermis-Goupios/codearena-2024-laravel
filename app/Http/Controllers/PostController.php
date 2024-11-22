@@ -52,10 +52,9 @@ class PostController extends Controller
         if (!$post->published_at) {
             abort(404); // If unpublished, return 404
         }
-    
-         // Load comments in descending order of created_at
+         // Load comments in ascending order of created_at
         $post->load(['comments' => function ($query) {
-            $query->latestFirst();
+            $query->firstFirst();
         }]);
 
         return view('posts.show', compact('post'));

@@ -37,7 +37,7 @@
       </div>
     </article>
 
-    <!-- Comments Section -->
+  <!-- Comments Section -->
   <div id="comments-section" class="mt-4">
       <h2 class="text-2xl font-bold text-gray-900">Comments</h2>
 

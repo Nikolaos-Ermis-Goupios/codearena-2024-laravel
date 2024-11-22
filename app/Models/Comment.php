@@ -18,4 +18,9 @@ class Comment extends Model
         return $query->orderBy('created_at', 'desc');
     }   
 
+    public function scopeFirstFirst($query)
+    {
+        return $query->orderBy('created_at', 'asc');
+    }   
+
 }

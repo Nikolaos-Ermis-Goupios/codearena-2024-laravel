@@ -25,7 +25,7 @@ class PostFactory extends Factory
             'image' => 'https://picsum.photos/id/' . $this->faker->numberBetween(1, 50) . '/800/400',
             'body' => $this->faker->paragraph(10),
             'slug' => $this->faker->slug(),
-            'published_at' => $this->faker->optional()->dateTimeBetween('-1 year', 'now'),
+            'published_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'promoted' => $this->faker->boolean(50), // 50% chance of being promoted
             'created_at' => now()->subDays(rand(1, 10)),
             'updated_at' => now(),

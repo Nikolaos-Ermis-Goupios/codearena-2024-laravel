@@ -30,7 +30,7 @@
             <!-- Comments -->
             <h2 class="text-2xl font-bold text-gray-900">Comments</h2>
             
-            @forelse ($post->comments as $comment)
+            @forelse ($post->comments->reverse() as $comment)
                 <div class="mt-4">
                     <!-- Commentor -->
                     <p class="font-semibold">{{ $comment->name }}:</p>
